@@ -1,0 +1,81 @@
+<mat-card appearance="outlined" style="box-sizing: border-box; padding: 10px 20px;">
+  <mat-card-content>
+    <h3>Agregar Producto</h3>
+    <div class="example-container">
+      <div class="example-button-row">
+        <button (click)="addCodigoBarra()" mat-raised-button>
+          Código de Barra <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <form [formGroup]="formParent" (ngSubmit)="onSubmit()">
+        <div>
+          <mat-form-field>
+            <mat-label>Nombre</mat-label>
+            <input
+              matInput
+              placeholder="Nombre"
+              formControlName="nombre"
+            />
+            <mat-error *ngIf="formParent.get('nombre')?.invalid && formParent.get('nombre')?.touched">
+              El nombre es obligatorio y debe tener entre 5 y 50 caracteres.
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field>
+            <mat-label>Precio</mat-label>
+            <input
+              matInput
+              placeholder="Precio"
+              formControlName="precio"
+              type="number"
+            />
+            <mat-error *ngIf="formParent.get('precio')?.invalid && formParent.get('precio')?.touched">
+              El precio es obligatorio.
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field>
+            <mat-label>Stock</mat-label>
+            <input
+              matInput
+              placeholder="Stock"
+              formControlName="cantidadEnStock"
+              type="number"
+            />
+            <mat-error *ngIf="formParent.get('cantidadEnStock')?.invalid && formParent.get('cantidadEnStock')?.touched">
+              La cantidad en stock es obligatoria.
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-checkbox formControlName="activo">Activo</mat-checkbox>
+        </div>
+        
+        <div formArrayName="codigoBarras" style="display: flex; flex-wrap: wrap; justify-content: left; align-items: top;">
+
+            <div class="mat-form-field" *ngFor="let codigo of getCtrl('codigoBarras', formParent).controls; index as i" style="margin-right: 20px;">
+              Código Barra {{i}}
+              <div [formGroupName]="i">
+                <mat-form-field>
+                  <mat-label>Codigo</mat-label>
+                  <input
+                    matInput
+                    placeholder="Codigo de Barra"
+                    formControlName="codigo"
+                  />
+                  <mat-error *ngIf="codigo.get('codigo')?.invalid && codigo.get('codigo')?.touched">
+                    El código de barra es obligatorio y debe tener un máximo de 13 caracteres.
+                  </mat-error>
+                </mat-form-field>
+                <mat-checkbox formControlName="activo">Activo</mat-checkbox>
+              </div>
+          </div>
+          <ng-template #noCodigoBarras>
+            <p>No se han añadido códigos de barra aún.</p>
+          </ng-template>
+        </div>
+
+        <button mat-flat-button type="submit" [disabled]="formParent.invalid">Guardar</button>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>

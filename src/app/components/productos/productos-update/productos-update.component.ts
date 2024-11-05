@@ -70,7 +70,8 @@ export class ProductosUpdateComponent implements OnInit {
         return new FormGroup({
             codigo: new FormControl('', [Validators.required, Validators.maxLength(13)]),
             activo: new FormControl(true),
-            fechaAlta: new FormControl('')
+            fechaAlta: new FormControl(''),
+            fechaModificacion: new FormControl('')
         });
     }
     addCodigoBarra(): void {
@@ -88,8 +89,27 @@ export class ProductosUpdateComponent implements OnInit {
         
         if (this.formParent.valid) {
             const id = this.formParent.get('idBuscar')?.value;
-            const producto = { ...this.formParent.value, id: id };
-            console.log("Este se el producto que se manda a actualizar: ", producto);
+            const producto = { ...this.formParent.value, id: +id };
+
+            delete producto.fechaModificacion;
+            delete producto.fechaAlta;
+            delete producto.idBuscar;
+
+            if (producto.codigoBarras && producto.codigoBarras.length > 0){
+                producto.codigoBarras = producto.codigoBarras.map((codigoBarra: any)=>{
+                    delete codigoBarra.fechaModificacion;
+                    if (codigoBarra.fechaAlta && codigoBarra.fechaAlta !== "") {
+                        const fechaAltaDate = new Date(codigoBarra.fechaAlta);
+                        codigoBarra.fechaAlta = fechaAltaDate.toISOString();
+                    } else {
+                        delete codigoBarra.fechaAlta;
+                    }
+                    return codigoBarra;
+                })
+                .filter((codigoBarra: any) => Object.keys(codigoBarra).length > 0);
+            }
+
+            console.log("Este es el producto que se manda a actualizar: ", producto);
             
             this.productoService.updateProducto(producto).subscribe((data) => {
                 console.log("Producto actualizado", data);

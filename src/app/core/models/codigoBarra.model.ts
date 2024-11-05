@@ -3,5 +3,6 @@ export interface CodigoBarra {
     codigo?: string;
     activo?: boolean;
     fechaAlta?: Date;
+    fechaModificacion?: Date;
   }
   

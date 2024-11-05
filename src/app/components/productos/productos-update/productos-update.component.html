@@ -1,0 +1,87 @@
+<mat-card appearance="outlined" style="box-sizing: border-box; padding: 10px 40px;">
+    <mat-card-content>
+        <h3>Actualizar Producto</h3>
+    </mat-card-content>
+    
+    <form [formGroup]="formParent" (ngSubmit)="prevent($event)">
+        <div style="margin-top: 20px; display: flex; height: 55px;">
+            <mat-form-field appearance="outline" style="height: 55px !important; margin-right: 10px;">
+                <mat-label>Buscar ID</mat-label>
+                <input matInput placeholder="ID del Producto" formControlName="idBuscar">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+            <button mat-flat-button style="flex-direction: row-reverse; border-radius: 4px !important; height: auto;" (click)="buscarProducto()">
+                <span>Buscar</span>
+                <mat-icon style="margin-left: 10px;">search</mat-icon>
+            </button>
+        </div>
+        
+        <div class="example-button-row" style="margin-top: 10px;">
+            <button (click)="addCodigoBarra()" mat-raised-button>
+                Código de Barra <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <mat-form-field>
+                <mat-label>Nombre</mat-label>
+                <input
+                    matInput
+                    placeholder="Nombre"
+                    formControlName="nombre"
+                />
+            </mat-form-field>
+            
+            <mat-form-field style="margin: 0px 10px;">
+                <mat-label>Precio</mat-label>
+                <input
+                    matInput
+                    placeholder="Precio"
+                    formControlName="precio"
+                    type="number"
+                />
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Stock</mat-label>
+                <input
+                    matInput
+                    placeholder="Stock"
+                    formControlName="cantidadEnStock"
+                    type="number"
+                />
+            </mat-form-field>
+            
+            <mat-checkbox formControlName="activo">Activo</mat-checkbox>
+        </div>
+
+        <div formArrayName="codigoBarras" style="display: flex; flex-wrap: wrap; justify-content: left; align-items: top;">
+            <mat-card appearance="outlined" class="mat-form-field" *ngFor="let codigo of getCtrl('codigoBarras', formParent).controls; index as i" style="margin-right: 20px;">
+                <div style="box-sizing: border-box; padding: 15px 30px; display: flex; flex-direction: column;">
+                    Código Barra {{i}}
+                    <div [formGroupName]="i" style="display: flex; flex-direction: column;">
+                        <mat-form-field>
+                            <mat-label>Codigo</mat-label>
+                            <input
+                                matInput
+                                placeholder="Codigo de Barra"
+                                formControlName="codigo"
+                            />
+                            <mat-error *ngIf="codigo.get('codigo')?.invalid && codigo.get('codigo')?.touched">
+                                El código de barra es obligatorio y debe tener un máximo de 13 caracteres.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-checkbox formControlName="activo">Activo</mat-checkbox>    
+                        <div>
+                            <label for="fechaAlta">Alta:</label>
+                            <input formControlName="fechaAlta" style="text-decoration: none; border: none;" />
+                        </div>
+                    </div>
+                    <button mat-button color="warn" (click)="removeCodigoBarra(i)">Eliminar</button> 
+                </div>
+            </mat-card>
+        </div>
+
+        <button mat-flat-button type="submit" (click)="onSubmit()" [disabled]="formParent.invalid" style="margin-top: 20px;">Guardar</button>
+    </form>
+</mat-card>

@@ -4,13 +4,15 @@ import { ProductosStore } from "../../core/store/productos.store";
 import { ProductosListComponent } from "../../components/productos/productos-list/productos-list.component";
 import { ProductosAddComponent } from "../../components/productos/productos-add/productos-add.component";
 import { ProductoService } from "../../core/services/producto.service";
+import { ProductosUpdateComponent } from "../../components/productos/productos-update/productos-update.component";
 @Component({
     selector: 'app-productos',
     standalone: true,
     imports: [
         CommonModule,
         ProductosListComponent,
-        ProductosAddComponent
+        ProductosAddComponent,
+        ProductosUpdateComponent
     ],
     providers: [
         ProductosStore

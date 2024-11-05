@@ -58,8 +58,7 @@ export class ProductosListComponent implements OnInit {
         this.productoService.getProductos().subscribe((data) => {
             this.productosStore.setProductos(data);
             console.log("esta es la data ", data);
-            console.log("este el store ", this.productosStore.productos);
-            
+            console.log("este el store ", this.productosStore.productos);            
         });
     }
     

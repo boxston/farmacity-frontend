@@ -47,6 +47,15 @@
           <th mat-header-cell *matHeaderCellDef> Última Modificación </th>
           <td mat-cell *matCellDef="let element"> {{element.fechaModificacion | date}} </td>
         </ng-container>
+
+        <ng-container matColumnDef="Accion">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="clickDelete(element.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
         
         <!-- Header and Row Definitions -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

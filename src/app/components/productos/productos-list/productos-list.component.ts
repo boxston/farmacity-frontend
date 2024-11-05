@@ -6,6 +6,7 @@ import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { ProductosStore } from "../../../core/store/productos.store";
 import { Producto } from "../../../core/models/producto.model";
 import { ProductoService } from "../../../core/services/producto.service";
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
     selector: 'app-productos-list',
@@ -14,7 +15,8 @@ import { ProductoService } from "../../../core/services/producto.service";
         CommonModule,
         MatCommonModule,
         MatTableModule,
-        MatCardModule
+        MatCardModule,
+        MatIcon
     ],
     templateUrl: './productos-list.component.html',
     styleUrls: ['./productos-list.component.css']
@@ -28,7 +30,8 @@ export class ProductosListComponent implements OnInit {
         'Stock',
         'Estado',
         'Fecha Alta',
-        'Ultima modificacion'
+        'Ultima modificacion',
+        'Accion'
     ];
 
     constructor(private productoService: ProductoService, private productosStore: ProductosStore, 
@@ -58,5 +61,11 @@ export class ProductosListComponent implements OnInit {
             console.log("este el store ", this.productosStore.productos);
             
         });
+    }
+    
+    clickDelete(id: number): void {
+        this.productoService.deleteProducto(id).subscribe(()=>{
+            this.loadProductos();
+        })
     }
 }

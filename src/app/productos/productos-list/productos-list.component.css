@@ -1,0 +1,23 @@
+table {
+  width: 100%;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.297);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th{
+  background-color: rgb(74, 135, 255) !important;
+  overflow: hidden;
+  color: #fafafa;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 50px;
+  box-sizing: border-box;
+}
